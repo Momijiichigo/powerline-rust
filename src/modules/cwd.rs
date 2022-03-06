@@ -7,6 +7,7 @@ use crate::{Color, Powerline, Style};
 pub struct Cwd<S: CwdScheme> {
     max_length: usize,
     wanted_seg_num: usize,
+    max_seg_length: usize,
     resolve_symlinks: bool,
     scheme: PhantomData<S>,
 }
@@ -22,8 +23,8 @@ pub trait CwdScheme {
 }
 
 impl<S: CwdScheme> Cwd<S> {
-    pub fn new(max_length: usize, wanted_seg_num: usize, resolve_symlinks: bool) -> Cwd<S> {
-        Cwd { max_length, wanted_seg_num, resolve_symlinks, scheme: PhantomData }
+    pub fn new(max_length: usize, wanted_seg_num: usize, max_seg_length: usize, resolve_symlinks: bool) -> Cwd<S> {
+        Cwd { max_length, wanted_seg_num, resolve_symlinks, max_seg_length, scheme: PhantomData }
     }
 }
 
@@ -31,6 +32,15 @@ macro_rules! append_cwd_segments {
     ($powerline:ident, $iter:expr) => {
         for val in $iter {
             $powerline.add_segment(val, Style::special(S::PATH_FG, S::PATH_BG, '\u{E0B1}', S::SEPARATOR_FG));
+        }
+    };
+    ($powerline:ident, $iter:expr, $len:expr) => {
+        for val in $iter {
+            if val.len() > $len {
+                $powerline.add_segment(format!("{}\u{2026}", &val[..$len]), Style::special(S::PATH_FG, S::PATH_BG, '\u{E0B1}', S::SEPARATOR_FG));
+            } else {
+                $powerline.add_segment(val, Style::special(S::PATH_FG, S::PATH_BG, '\u{E0B1}', S::SEPARATOR_FG));
+            }
         }
     };
 }
@@ -59,17 +69,17 @@ impl<S: CwdScheme> Module for Cwd<S> {
         let depth = cwd.matches('/').count();
 
         if (cwd.len() > self.max_length as usize) && (depth > self.wanted_seg_num) {
-            let left = self.wanted_seg_num / 2;
+            let left = 1; // self.wanted_seg_num / 2;
             let right = self.wanted_seg_num - left;
 
             let start = cwd.split('/').skip(1).take(left);
             let end = cwd.split('/').skip(depth - right + 1);
 
-            append_cwd_segments!(powerline, start);
+            append_cwd_segments!(powerline, start, self.max_seg_length);
             powerline.add_segment('\u{2026}', Style::special(S::PATH_FG, S::PATH_BG, '\u{E0B1}', S::SEPARATOR_FG));
-            append_cwd_segments!(powerline, end);
+            append_cwd_segments!(powerline, end, self.max_seg_length);
         } else {
-            append_cwd_segments!(powerline, cwd.split('/').skip(1));
+            append_cwd_segments!(powerline, cwd.split('/').skip(1), self.max_seg_length);
         };
 
         if let Some(style) = powerline.last_style_mut() {

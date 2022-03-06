@@ -67,6 +67,6 @@ impl GitScheme for SimpleTheme {
 }
 
 impl VirtualEnvScheme for SimpleTheme {
-    const PYVENV_BG: Color = Color(42);
+    const PYVENV_BG: Color = Color(35);
     const PYVENV_FG: Color = Color(0);
 }
