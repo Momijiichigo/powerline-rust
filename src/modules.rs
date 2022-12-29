@@ -8,7 +8,7 @@ mod host;
 mod readonly;
 mod user;
 mod venv;
-
+mod padding;
 #[cfg(feature = "time")]
 mod time;
 
@@ -22,6 +22,7 @@ pub use readonly::{ReadOnly, ReadOnlyScheme};
 pub use time::{Time, TimeScheme};
 pub use user::{User, UserScheme};
 pub use venv::{VirtualEnv, VirtualEnvScheme};
+pub use padding::{PaddingBlock, NextLineBlock, PaddingScheme};
 
 pub trait Module {
     fn append_segments(&mut self, powerline: &mut Powerline);

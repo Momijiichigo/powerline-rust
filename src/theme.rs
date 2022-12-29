@@ -11,6 +11,11 @@ impl CmdScheme for SimpleTheme {
     const CMD_PASSED_FG: Color = Color(15);
 }
 
+impl PaddingScheme for SimpleTheme {
+    const BLOCK_BG: Option<Color> = Some(Color(0));
+    const BLOCK_FG: Color = Color(250);
+}
+
 impl CwdScheme for SimpleTheme {
     const CWD_FG: Color = Color(254);
     const HOME_BG: Color = Color(31);

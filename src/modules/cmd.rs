@@ -37,6 +37,6 @@ impl<S: CmdScheme> Module for Cmd<S> {
         };
 
         let special = if users::get_current_uid() == 0 { S::CMD_ROOT_SYMBOL } else { S::CMD_USER_SYMBOL };
-        powerline.add_segment(special, Style::simple(fg, bg));
+        powerline.add_segment(special, Style::simple(fg, Some(bg)));
     }
 }

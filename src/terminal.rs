@@ -8,6 +8,8 @@ pub struct BgColor(u8);
 pub struct FgColor(u8);
 
 pub struct Reset;
+pub struct ResetBG;
+
 
 impl Color {
     pub fn to_u8(self) -> u8 {
@@ -66,6 +68,20 @@ impl std::fmt::Display for FgColor {
 
         #[cfg(feature = "zsh-shell")]
         return write!(f, "%{{\x1b[38;5;{}m%}}", self.0);
+    }
+}
+
+
+impl std::fmt::Display for ResetBG {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        #[cfg(feature = "bash-shell")]
+        return f.write_str(r#"\[\e[49m\]"#);
+
+        #[cfg(feature = "bare-shell")]
+        return f.write_str("\x1b[49m");
+
+        #[cfg(feature = "zsh-shell")]
+        return f.write_str("%{\x1b[49m%}");
     }
 }
 

@@ -95,11 +95,11 @@ impl<S: GitScheme> Module for Git<S> {
             (S::GIT_REPO_CLEAN_FG, S::GIT_REPO_CLEAN_BG)
         };
 
-        powerline.add_segment(format!("\u{E0A0} {}", stats.branch_name), Style::simple(branch_fg, branch_bg));
+        powerline.add_segment(format!("\u{E0A0} {}", stats.branch_name), Style::simple(branch_fg, Some(branch_bg)));
 
         let mut add_elem = |count: u32, symbol, fg, bg| match count.cmp(&1) {
-            Ordering::Equal => powerline.add_segment(symbol, Style::simple(fg, bg)),
-            Ordering::Greater => powerline.add_segment(format!("{count}{symbol}"), Style::simple(fg, bg)),
+            Ordering::Equal => powerline.add_segment(symbol, Style::simple(fg, Some(bg))),
+            Ordering::Greater => powerline.add_segment(format!("{count}{symbol}"), Style::simple(fg, Some(bg))),
             Ordering::Less => (),
         };
 

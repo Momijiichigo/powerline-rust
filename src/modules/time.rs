@@ -29,6 +29,6 @@ impl<S: TimeScheme> Module for Time<S> {
     fn append_segments(&mut self, powerline: &mut Powerline) {
         let now = chrono::offset::Local::now().format(self.time_format);
 
-        powerline.add_segment(now, Style::simple(S::TIME_FG, S::TIME_BG));
+        powerline.add_segment(now, Style::simple(S::TIME_FG, Some(S::TIME_BG)));
     }
 }
