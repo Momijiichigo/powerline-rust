@@ -6,6 +6,7 @@ use crate::{Color, Powerline, Style};
 pub trait PaddingScheme {
     const BLOCK_BG: Option<Color>;
     const BLOCK_FG: Color;
+    const NEXT_LINE_BG: Option<Color>;
 }
 
 pub struct PaddingBlock<S: PaddingScheme> {
@@ -62,9 +63,9 @@ impl<S: PaddingScheme> Module for NextLineBlock<S> {
         ));
         powerline.add_short_segment(&self.content, Style::special(
                 S::BLOCK_FG,
-                S::BLOCK_BG,
+                S::NEXT_LINE_BG,
                 self.separator,
-                S::BLOCK_BG.unwrap_or(Color(0)),
+                S::BLOCK_FG,
             )
         );
     }

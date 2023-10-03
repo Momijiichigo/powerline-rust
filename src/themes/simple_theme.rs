@@ -14,6 +14,7 @@ impl CmdScheme for SimpleTheme {
 impl PaddingScheme for SimpleTheme {
     const BLOCK_BG: Option<Color> = Some(Color(0));
     const BLOCK_FG: Color = Color(250);
+    const NEXT_LINE_BG: Option<Color> = None;
 }
 
 impl CwdScheme for SimpleTheme {

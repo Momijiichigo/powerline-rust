@@ -1,7 +1,7 @@
 pub mod modules;
 pub mod powerline;
 pub mod terminal;
-pub mod theme;
+pub mod themes;
 
 pub(crate) mod utils;
 
