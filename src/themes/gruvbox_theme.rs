@@ -12,7 +12,7 @@ impl CmdScheme for GruvboxTheme {
 }
 
 impl PaddingScheme for GruvboxTheme {
-    const BLOCK_BG: Option<Color> = Some(Color(130));
+    const BLOCK_BG: Option<Color> = Some(Color(250)); // Some(Color(130));
     const BLOCK_FG: Color = Color(250);
     const NEXT_LINE_BG: Option<Color> = None;
 }
