@@ -31,6 +31,7 @@ impl ExitCodeScheme for GruvboxTheme {
     const EXIT_CODE_FG: Color = Color(15);
 }
 
+#[cfg(target_family = "unix")]
 impl UserScheme for GruvboxTheme {
     const USERNAME_BG: Color = Color(240);
     const USERNAME_FG: Color = Color(250);
@@ -42,6 +43,7 @@ impl HostScheme for GruvboxTheme {
     const HOSTNAME_FG: Color = Color(250);
 }
 
+#[cfg(target_family = "unix")]
 impl ReadOnlyScheme for GruvboxTheme {
     const READONLY_BG: Color = Color(124);
     const READONLY_FG: Color = Color(254);

@@ -31,6 +31,7 @@ impl ExitCodeScheme for SimpleTheme {
     const EXIT_CODE_FG: Color = Color(15);
 }
 
+#[cfg(target_family = "unix")]
 impl UserScheme for SimpleTheme {
     const USERNAME_BG: Color = Color(240);
     const USERNAME_FG: Color = Color(250);
@@ -42,6 +43,7 @@ impl HostScheme for SimpleTheme {
     const HOSTNAME_FG: Color = Color(250);
 }
 
+#[cfg(target_family = "unix")]
 impl ReadOnlyScheme for SimpleTheme {
     const READONLY_BG: Color = Color(124);
     const READONLY_FG: Color = Color(254);

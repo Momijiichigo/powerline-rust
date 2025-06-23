@@ -5,11 +5,13 @@ authors = ["cirho <me@cirho.com>"]
 edition = "2018"
 
 [dependencies]
-users = "0.11"
 libc = "0.2"
-hostname = "0.3"
-git2 = { version = "0.18", optional = true, default-features = false }
-chrono = { version = "0.4.32", optional = true }
+hostname = "0.4"
+git2 = { version = "0.20", optional = true, default-features = false }
+chrono = { version = "0.4.41", optional = true }
+
+[target.'cfg(unix)'.dependencies]
+users = "0.11"
 
 [features]
 default = ["bash-shell", "libgit"]
