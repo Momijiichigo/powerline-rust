@@ -83,17 +83,14 @@ macro_rules! append_cwd_segments {
 impl<S: CwdScheme> Module for Cwd<S> {
     fn append_segments(&mut self, powerline: &mut Powerline) {
         #[cfg(target_family = "unix")]
-        let mut cwd = {
-            let current_dir = if self.resolve_symlinks {
-                env::current_dir().unwrap()
-            } else {
-                path::PathBuf::from(env::var("PWD").unwrap())
-            };
-
-            current_dir.to_str().unwrap()
+        let current_dir = if self.resolve_symlinks {
+            env::current_dir().unwrap()
+        } else {
+            path::PathBuf::from(env::var("PWD").unwrap())
         };
+        #[cfg(target_family = "unix")]
+        let mut cwd = current_dir.to_str().unwrap();
 
-        let pwd = env::var("PWD").unwrap();
         // println!("{pwd}");
         #[cfg(target_family = "windows")]
         let mut cwd: &str = &get_msys_path(&env::var("PWD").unwrap());
